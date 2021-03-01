@@ -3,13 +3,13 @@ using Xunit;
 
 namespace Tests
 {
-    public class Tests
+    public class BmiTests
     {
         [Theory]
         [InlineData(5.25f, 125, 22.7, BmiCategory.Normal)]
         public void body_mass_index_calculator_returns_correct_output(float heightFeet, float weightLbs, float bmi, BmiCategory category)
         {
-            Assert.Equal($"Height: {heightFeet.ToInches()} inches\nWeight: {weightLbs} lbs\nBMI: {bmi}.\nYou are {category.ToString()}",
+            Assert.Equal($"Height: {heightFeet.ToInches()} inches\nWeight: {weightLbs} lbs\nBMI: {bmi}.\nBMI Category: {category.ToString()}",
                 BodyMassIndex.Calculate(5.25f, 125));
         }
 

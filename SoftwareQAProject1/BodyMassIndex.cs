@@ -13,7 +13,7 @@ namespace SoftwareQAProject1
             var bmi = GetBmiValue(kg, meters);
             var category = GetCategory(bmi);
             
-            return $"Height: {inches} inches\nWeight: {weightInLbs} lbs\nBMI: {bmi}.\nYou are {category.ToString()}";
+            return $"Height: {inches} inches\nWeight: {weightInLbs} lbs\nBMI: {bmi}.\nBMI Category: {category.ToString()}";
         }
 
         public static float GetBmiValue(float kg, float meters) => (float) Math.Round(kg / Math.Pow(meters, 2), 1);

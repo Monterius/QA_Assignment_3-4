@@ -51,8 +51,9 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Tests.cs" />
+        <Compile Include="BMITests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="RetirementTests.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\SoftwareQAProject1\SoftwareQAProject1.csproj">
