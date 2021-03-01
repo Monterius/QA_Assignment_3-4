@@ -1,5 +1,4 @@
-﻿using System;
-using SoftwareQAProject1;
+﻿using SoftwareQAProject1;
 using Xunit;
 
 namespace Tests
@@ -10,7 +9,7 @@ namespace Tests
         [InlineData(5.25f, 125, 22.7, BmiCategory.Normal)]
         public void body_mass_index_calculator_returns_correct_output(float heightFeet, float weightLbs, float bmi, BmiCategory category)
         {
-            Assert.Equal($"Height: {heightFeet.ToInches()} inches\tWeight: {weightLbs} lbs\tBMI: {bmi}.\nYou are {category.ToString()}",
+            Assert.Equal($"Height: {heightFeet.ToInches()} inches\nWeight: {weightLbs} lbs\nBMI: {bmi}.\nYou are {category.ToString()}",
                 BodyMassIndex.Calculate(5.25f, 125));
         }
 
@@ -26,6 +25,7 @@ namespace Tests
 
         [Theory]
         [InlineData(56.25f, 1.575f, 22.7f)]
+        [InlineData(33.7f, 1.682f, 11.9f)]
         public void get_bmi_value_test(float kg, float meters, float bmi)
         {
             Assert.Equal(bmi, BodyMassIndex.GetBmiValue(kg, meters));
