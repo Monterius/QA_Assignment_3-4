@@ -23,7 +23,7 @@ namespace Tests
 
         [Theory]
         [InlineData(500000, 20250, 25)]
-        [InlineData(1500000,8775, 171)]
+        [InlineData(1500000, 8775, 171)]
         public void years_until_goal_met_test(int goal, int savingsPerYear, int output)
         {
             Assert.Equal(output, Retirement.GetYearsUntilGoalMet(goal, savingsPerYear));
@@ -31,7 +31,7 @@ namespace Tests
 
         [Theory]
         [InlineData(45, 25, 70)]
-        [InlineData(30,35, 65)]
+        [InlineData(30, 35, 65)]
         public void age_when_goal_met_test(int age, int yearsTil, int output)
         {
             Assert.Equal(output, Retirement.GetAgeWhenGoalMet(age, yearsTil));

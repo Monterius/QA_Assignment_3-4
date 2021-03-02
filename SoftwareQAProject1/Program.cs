@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace SoftwareQAProject1
 {
@@ -6,27 +8,30 @@ namespace SoftwareQAProject1
     {
         private const string MainMenuKeyword = "MAIN";
         private const string ExitApplicationKeyword = "EXIT";
+        private const string ClearConsoleKeyword = "CLEAR";
         
         private static void Main()
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            
             while (true)
             {
                 Console.WriteLine("Available Functions:\n \n" +
                                   "1. Body Mass Index\n" +
                                   "2. Retirement\n" +
-                                  "3. Exit Application (or type 'EXIT')\n" +
-                                  "\nType 'MAIN' at any point to go back to the main menu\n" +
-                                  "Type 'EXIT' at any point to exit the application");
+                                  $"3. Exit Application (or type '{ExitApplicationKeyword}')\n" +
+                                  $"\nType '{ClearConsoleKeyword}' to clear the console window\n" +
+                                  $"Type '{MainMenuKeyword}' at any point to go back to the main menu\n" +
+                                  $"Type '{ExitApplicationKeyword}' at any point to exit the application");
                 
                 Console.Write("\nType the corresponding number to execute a function: ");
 
-                var input = Console.ReadLine();
-                if (input.IsExitApplicationKeyword()) Environment.Exit(0);
-                if (input.IsMainMenuKeyword()) { Main(); return; }
+                var input = TryEvaluateKeyword(Console.ReadLine());
+                if (input == null) return;
 
                 if (!int.TryParse(input, out var function))
                 {
-                    Console.WriteLine("Not a valid number");
+                    Console.WriteLine("\nNot a valid input\n");
                     Main();
                 }
                 
@@ -40,7 +45,7 @@ namespace SoftwareQAProject1
                         break;
                     case 3: Environment.Exit(0);
                         break;
-                    default: Console.WriteLine($"Number {function} does not have a corresponding function");
+                    default: Console.WriteLine($"\nNumber {function} does not have a corresponding function\n");
                         continue;
                 }
                 break;
@@ -51,25 +56,37 @@ namespace SoftwareQAProject1
 
         private static bool IsMainMenuKeyword(this string value) => value.ToUpper() == MainMenuKeyword;
 
-        private static string TryEvaluateKeyword(string input)
+        private static bool IsClearConsoleKeyword(this string value) => value.ToUpper() == ClearConsoleKeyword;
+
+        private static string TryEvaluateKeyword(string input, [CallerMemberName] string callerName = "")
         {
+            if (input.IsClearConsoleKeyword())
+            {
+                Console.Clear();
+                typeof(Program).GetMethod(callerName, BindingFlags.NonPublic | BindingFlags.Static)?.Invoke(null, null);
+                return null;
+            }
             if (input.IsExitApplicationKeyword()) { Environment.Exit(0); return null; }
-            if (input.IsMainMenuKeyword()) { Main(); return null; }
-            return input;
+            if (!input.IsMainMenuKeyword()) return input;
+            
+            Console.WriteLine();
+            Main(); 
+            return null;
         }
 
         private static void WriteOutput(string output)
         {
-            Console.WriteLine("\n-------------------------------------------");
+            Console.Clear();
+            Console.WriteLine("\n-------------------------------------------\n");
             Console.WriteLine(output);
-            Console.WriteLine("-------------------------------------------\n");
+            Console.WriteLine("\n-------------------------------------------\n");
         }
 
         private static void BodyMassIndexFunction()
         {
             while (true)
             {
-                Console.WriteLine("---------- Body Mass Index ----------\n");
+                Console.WriteLine("---------------- Body Mass Index ----------------\n");
                 Console.Write("Height in decimal form (Ex. 5 foot 3 inches would be 5.25): ");
 
                 var input = TryEvaluateKeyword(Console.ReadLine());
@@ -103,7 +120,7 @@ namespace SoftwareQAProject1
         {
             while (true)
             {
-                Console.WriteLine("---------- Retirement ----------\n");
+                Console.WriteLine("---------------- Retirement ----------------\n");
                 Console.Write("Enter age: ");
 
                 var input = TryEvaluateKeyword(Console.ReadLine());
@@ -133,9 +150,9 @@ namespace SoftwareQAProject1
                 input = TryEvaluateKeyword(Console.ReadLine());
                 if (input == null) return;
 
-                if (!float.TryParse(input, out var percentSaved))
+                if (!float.TryParse(input, out var percentSaved) || percentSaved < 0)
                 {
-                    Console.WriteLine("Not a valid float");
+                    Console.WriteLine("Not a valid input");
                     RetirementFunction();
                     continue;
                 }
@@ -145,9 +162,9 @@ namespace SoftwareQAProject1
                 input = TryEvaluateKeyword(Console.ReadLine());
                 if (input == null) return;
 
-                if (!int.TryParse(input, out var goal))
+                if (!int.TryParse(input, out var goal) || goal < 0)
                 {
-                    Console.WriteLine("Not a valid integer");
+                    Console.WriteLine("Not a valid input");
                     continue;
                 }
 
