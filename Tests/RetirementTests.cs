@@ -24,22 +24,24 @@ namespace Tests
         [Theory]
         [InlineData(500000, 20250, 25)]
         [InlineData(1500000,8775, 171)]
-        public void years_until_goal_meet_test(int goal, int savingsPerYear, int output)
+        public void years_until_goal_met_test(int goal, int savingsPerYear, int output)
         {
-            Assert.Equal(output, Retirement.GetYearsUntilGoalMeet(goal, savingsPerYear));
+            Assert.Equal(output, Retirement.GetYearsUntilGoalMet(goal, savingsPerYear));
         }
 
         [Theory]
         [InlineData(45, 25, 70)]
-        public void age_when_goal_meet_test(int age, int yearsTil, int output)
+        [InlineData(30,35, 65)]
+        public void age_when_goal_met_test(int age, int yearsTil, int output)
         {
-            Assert.Equal(output, Retirement.GetAgeWhenGoalMeet(age, yearsTil));
+            Assert.Equal(output, Retirement.GetAgeWhenGoalMet(age, yearsTil));
         }
 
         [Theory]
         [InlineData(0, false)]
         [InlineData(100, false)]
         [InlineData(50, true)]
+        [InlineData(-1, false)]
         public void is_accepted_age_test(int age, bool result)
         {
             Assert.Equal(result, age.IsAcceptedAge());
@@ -47,6 +49,7 @@ namespace Tests
 
         [Theory]
         [InlineData(0, false)]
+        [InlineData(-1, false)]
         [InlineData(100000, true)]
         [InlineData(500001, false)]
         public void is_accepted_salary_test(int salary, bool result)

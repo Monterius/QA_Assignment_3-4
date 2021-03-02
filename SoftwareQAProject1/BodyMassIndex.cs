@@ -8,16 +8,14 @@ namespace SoftwareQAProject1
         public static string Calculate(float height, float weightInLbs)
         {
             var inches = height.ToInches();
-            var meters = inches.ToMeters();
+            var meters = ((double) inches).ToMeters();
             var kg = weightInLbs.ToKilograms();
             var bmi = GetBmiValue(kg, meters);
             var category = GetCategory(bmi);
             
-            return $"Height: {inches} inches\nWeight: {weightInLbs} lbs\nBMI: {bmi}.\nBMI Category: {category.ToString()}";
+            return $"Height: {inches} inches\nWeight: {weightInLbs} lbs\nBMI: {bmi}\nBMI Category: {category.ToString()}";
         }
 
-        public static float GetBmiValue(float kg, float meters) => (float) Math.Round(kg / Math.Pow(meters, 2), 1);
-        
         public static BmiCategory GetCategory(float bmi)
         {
             if (bmi < 18.5f) return BmiCategory.Underweight;
@@ -26,10 +24,12 @@ namespace SoftwareQAProject1
             return BmiCategory.Obese;
         }
 
-        public static float ToInches(this float height) => height * 12;
+        public static float GetBmiValue(float kg, double meters) => (float) Math.Round(kg / Math.Pow(meters, 2), 1);
 
-        public static float ToMeters(this float inches) => inches * 0.025f;
+        public static float ToInches(this float height) => (float) Math.Round(height * 12, 1);
 
-        public static float ToKilograms(this float pounds) => pounds * 0.45f;
+        public static double ToMeters(this double inches) => Math.Round(inches * 0.025, 5);
+
+        public static float ToKilograms(this float pounds) => (float) Math.Round(pounds * 0.45f, 2);
     }
 }
