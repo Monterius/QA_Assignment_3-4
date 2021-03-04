@@ -18,9 +18,12 @@ namespace Tests
         }
 
         [Theory]
-        [InlineData(22.7f, BmiCategory.Normal)]
-        [InlineData(17.6f, BmiCategory.Underweight)]
-        [InlineData(28, BmiCategory.Overweight)]
+        [InlineData(18.5f, BmiCategory.Normal)]
+        [InlineData(24.9f, BmiCategory.Normal)]
+        [InlineData(18.4f, BmiCategory.Underweight)]
+        [InlineData(25, BmiCategory.Overweight)]
+        [InlineData(29.9, BmiCategory.Overweight)]
+        [InlineData(30, BmiCategory.Obese)]
         [InlineData(38.5f, BmiCategory.Obese)]
         public void bmi_category_test(float bmi, BmiCategory category)
         {
