@@ -12,6 +12,7 @@ namespace SoftwareQAProject1
         
         private static void Main()
         {
+            // Comment
             Console.ForegroundColor = ConsoleColor.Blue;
             
             while (true)
